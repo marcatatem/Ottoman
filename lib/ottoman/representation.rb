@@ -2,7 +2,7 @@ module Ottoman
   module Representation
 
     def inspect
-      "#<#{self.class.name} id: #{object_representation(@_id)}, #{hash_representation(self.to_hash)}>"
+      "#<#{self.class.name} id: #{object_representation(self.id)}, #{hash_representation(self.to_hash)}>"
     end
 
     def to_hash
