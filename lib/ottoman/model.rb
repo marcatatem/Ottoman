@@ -11,6 +11,7 @@ module Ottoman
     # uuid and attribute list
     @@_uuid = lambda{}
     @@_attributes = []
+    @@_table_name = self.name.tableize
 
     # internal references
     attr_accessor :_cas, :_id
@@ -97,6 +98,10 @@ module Ottoman
         end
       end
       r.empty? ? nil : r.length == 1 ? r[0] : r
+    end
+
+    def self.exists? uuid
+      Ottoman.client.exists? "#{self.name.tableize}:#{uuid}"
     end
 
     # update record
