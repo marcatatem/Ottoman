@@ -145,7 +145,7 @@ describe Ottoman do
 
       after :all do
         @book.delete
-        Ottoman.delete('parliament-do-that-stuff') rescue nil # -> cleaning up
+        Ottoman.client.delete('books:parliament-do-that-stuff') rescue nil # -> cleaning up
       end
 
       it "should be possible to store arbitrary types of data in attributes" do
@@ -169,7 +169,7 @@ describe Ottoman do
       end
 
       it "should be possible to bypass the model constraints by accessing the datastore directly" do
-        -> { Ottoman.client.add('parliament-do-that-stuff', title: "Do that stuff", author: "Parliament", publisher: "Casablanca") }.should_not raise_error
+        -> { Ottoman.client.add('books:parliament-do-that-stuff', title: "Do that stuff", author: "Parliament", publisher: "Casablanca") }.should_not raise_error
       end
 
       it "should ignore silently undeclared attributes from the raw json input when loaded with the model's fetch method" do

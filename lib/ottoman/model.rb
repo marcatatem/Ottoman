@@ -49,7 +49,7 @@ module Ottoman
     end
 
     def id
-      @_id
+      @_id.split(':').last
     end
 
     # validations
@@ -72,7 +72,7 @@ module Ottoman
     def create_record
       run_callbacks :create do
         uuid = self.instance_eval(&@@_uuid)
-        @_cas = Ottoman.client.add uuid, self.to_hash
+        @_cas = Ottoman.client.add "#{self.class.name.tableize}:#{uuid}", self.to_hash
         @_id  = uuid
         self
       end
@@ -80,7 +80,7 @@ module Ottoman
 
     def update_record
       run_callbacks :update do
-        @_cas = Ottoman.client.update @_id, self.to_hash, cas: @_cas
+        @_cas = Ottoman.client.update "#{self.class.name.tableize}:#{self.id}", self.to_hash, cas: @_cas
         self
       end
     end
@@ -88,7 +88,7 @@ module Ottoman
     # fetch record
     def self.fetch *uuid
       r = []
-      Ottoman.client.get(uuid.to_a).each_pair do |k, v|
+      Ottoman.client.get(uuid.to_a.map{|x|"#{self.name.tableize}:#{x}"}).each_pair do |k, v|
         if v[0].is_a?(Hash)
           instance = new(v[0].extract!(*@@_attributes))
           instance._cas = v[2]
@@ -115,7 +115,7 @@ module Ottoman
 
     # delete record
     def delete force: false
-      Ottoman.client.delete(@_id, cas: force ? nil : @_cas) unless new_record? or @_cas.blank?
+      Ottoman.client.delete("#{self.class.name.tableize}:#{self.id}", cas: force ? nil : @_cas) unless new_record? or @_cas.blank?
       freeze
     end
 

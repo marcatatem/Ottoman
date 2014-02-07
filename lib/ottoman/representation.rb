@@ -11,7 +11,7 @@ module Ottoman
         pairs[attribute] = send(attribute)
       end
       pairs
-    end
+    end; alias :to_h :to_hash
 
     protected
 
