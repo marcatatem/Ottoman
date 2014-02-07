@@ -50,7 +50,7 @@ module Ottoman
     end
 
     def id
-      @_id.split(':').last
+      @_id.split(':').last rescue nil
     end
 
     # validations
