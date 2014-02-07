@@ -16,7 +16,7 @@ module Ottoman
     attr_accessor :_cas, :_id
 
     # available callbacks
-    define_model_callbacks :validation, :create, :update
+    define_model_callbacks :validation, :create, :update, :save
 
     # attributes
     def self.attribute *names
