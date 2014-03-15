@@ -1,3 +1,4 @@
+require "digest"
 require "spec_helper"
 require "./lib/ottoman"
 require "book"
@@ -104,7 +105,7 @@ describe Ottoman do
       end
 
       after :all do
-        @book.delete(force: true) # -> this is required because the cas (check-and-set parameter) has changed
+        @book.delete(true) # -> force = true, this is required because the cas (check-and-set parameter) has changed
       end
 
       it "should update the year attribute" do

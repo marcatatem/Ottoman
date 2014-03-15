@@ -19,8 +19,14 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activemodel", "~> 4.0.0"
-  spec.add_dependency "oj", "~> 2.1.4"
-  spec.add_dependency "couchbase", "~> 1.3.2"
+  if RUBY_PLATFORM =~ /java/
+    spec.add_dependency "gson", "~> 0.6.1"
+    spec.add_dependency "couchbase-jruby-client", "~> 0.2.0"
+  else
+    spec.add_dependency "oj", "~> 2.1.4"
+    spec.add_dependency "couchbase", "~> 1.3.2"
+  end
+  
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

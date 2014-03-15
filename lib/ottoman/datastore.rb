@@ -16,7 +16,7 @@ module Ottoman
     end
 
     def add key, value, **options
-      @client.add key, value, { format: :document }.merge(options)
+      a = @client.add key, value, { format: :document }.merge(options)
     end
 
     def update key, value, **options
